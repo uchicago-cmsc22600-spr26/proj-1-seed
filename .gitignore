@@ -1,0 +1,11 @@
+## SML/NJ stuff ##
+.cm/
+
+# macOS finder
+.DS_Store
+
+# project-specific files
+*.amd64-darwin
+*.amd64-linux
+*.arm64-darwin
+*.arm64-linux

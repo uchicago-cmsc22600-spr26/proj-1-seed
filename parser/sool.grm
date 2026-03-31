@@ -1,0 +1,82 @@
+(* sool.grm
+ *
+ * COPYRIGHT (c) 2026 John Reppy (https://cs.uchicago.edu/~jhr)
+ * All rights reserved.
+ *
+ * Sample code
+ * CMSC 22600
+ * Spring 2026
+ * University of Chicago
+ *
+ * ml-antlr specification for SooL.
+ *)
+
+%name Sool;
+
+%defs (
+  structure PT = ParseTree
+
+(* apply a mark constructor to a span and a tree *)
+  fun mark cons (span : AntlrStreamPos.span, tr) = cons{span = span, tree = tr}
+
+  (** OTHER HELPER FUNCTIONS HERE **)
+);
+
+(* SooL tokens *)
+%tokens
+    : KW_as             ("as")
+    | KW_bool           ("bool")
+    | KW_class          ("class")
+    | KW_else           ("else")
+    | KW_extends        ("extends")
+    | KW_false          ("false")
+    | KW_if             ("if")
+    | KW_int            ("int")
+    | KW_interface      ("interface")
+    | KW_meth           ("method")
+    | KW_nil            ("nil")
+    | KW_override       ("override")
+    | KW_return         ("return")
+    | KW_self           ("self")
+    | KW_string         ("string")
+    | KW_true           ("true")
+    | KW_var            ("var")
+    | KW_void           ("void")
+    | KW_while          ("while")
+    | LP                ("(")
+    | RP                (")")
+    | LCB               ("{")
+    | RCB               ("}")
+    | COLON             (":")
+    | EQ                ("=")
+    | COMMA             (",")
+    | SEMI              (";")
+    | ARROW             ("->")
+    | ASSIGN            (":=")
+    | DOT               (".")
+    | BANG              ("!")
+    | QMARK             ("?")
+    | DQMARK            ("??")
+    | ORELSE            ("||")
+    | ANDALSO           ("&&")
+    | LT                ("<")
+    | LTE               ("<=")
+    | EQEQ              ("==")
+    | NEQ               ("!=")
+    | PLUS              ("+")
+    | MINUS             ("-")
+    | CONCAT            ("@")
+    | TIMES             ("*")
+    | DIV               ("/")
+    | ID of Atom.atom
+    | NUMBER of IntInf.int
+    | STRING of string
+    ;
+
+%start Program;
+
+(* Minimal grammar so that ml-antlr can compile this file; replace with your code *)
+Program
+        : (* empty *)
+                => (mark PT.PROGRAM (FULL_SPAN, []))
+        ;
