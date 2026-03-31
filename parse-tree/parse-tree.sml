@@ -89,13 +89,13 @@ structure ParseTree =
       | EXP_New of id * exp list                (* <id> '(' <exp>* ')' *)
       | EXP_Apply of member * exp list          (* method application *)
       | EXP_As of id * exp                      (* <cls> '.' 'as' '(' <exp> ')' *)
+      | EXP_Nil of typ                          (* <tyc> '.' 'nil' *)
       | EXP_Select of member                    (* field selection *)
       | EXP_Require of exp                      (* <exp> '!' *)
       | EXP_Var of id                           (* <id> or 'self'*)
       | EXP_Number of IntInf.int                (* <num> *)
       | EXP_String of string                    (* <str> *)
       | EXP_Bool of bool                        (* 'true' or 'false' *)
-      | EXP_Nil of typ                          (* <tyc> '.' 'nil' *)
 
   (* selection of object member-variables and functions *)
     and member
