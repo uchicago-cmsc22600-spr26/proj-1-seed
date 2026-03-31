@@ -6,11 +6,12 @@
 # Spring 2026
 # University of Chicago
 #
-dir="$(cd "$(dirname "$0")" && pwd)"
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
 
 HEAP_SUFFIX="$(sml @SMLsuffix)"
 
-HEAP="$dir/soolc.$HEAP_SUFFIX"
+HEAP="$DIR/soolc.$HEAP_SUFFIX"
 
 if test ! -r "$HEAP" ; then
   echo "Heap image $HEAP not found; run make to build"
