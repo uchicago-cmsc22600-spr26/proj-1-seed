@@ -9,3 +9,6 @@
 *.amd64-linux
 *.arm64-darwin
 *.arm64-linux
+
+*.grm.sml
+*.lex.sml

@@ -103,7 +103,7 @@ structure Main : sig
               handle ex => (ignore (finish()); handleExn ex)
           end
       | main (cmd, _) = (
-          TextIO.output(TextIO.stdErr, concat["usage: [--test-scanner]", cmd, " <file>\n"]);
+          TextIO.output(TextIO.stdErr, concat["usage: ", cmd, " [--test-scanner] <file>\n"]);
           OS.Process.failure)
 
   end

@@ -6,24 +6,15 @@
 # Spring 2026
 # University of Chicago
 #
+dir="$(cd "$(dirname "$0")" && pwd)"
 
-SOOLC=$0
-BINDIR=${SOOLC%soolc.sh}
+HEAP_SUFFIX="$(sml @SMLsuffix)"
 
-OS=$(uname -s)
-case x"$OS" in
-  xDarwin) HEAP_SUFFIX=x86-darwin ;;
-  xLinux) HEAP_SUFFIX=x86-linux ;;
-  *) echo "$OS nut supported"
-     exit 1
-  ;;
-esac
+HEAP="$dir/soolc.$HEAP_SUFFIX"
 
-HEAP=$BINDIR/soolc.$HEAP_SUFFIX
-
-if test ! -r $HEAP ; then
+if test ! -r "$HEAP" ; then
   echo "Heap image $HEAP not found; run make to build"
   exit 1
 fi
 
-exec sml @SMLcmdname=$0 @SMLload=$HEAP $@
+exec sml @SMLcmdname="$0" @SMLload="$HEAP" "$@"
