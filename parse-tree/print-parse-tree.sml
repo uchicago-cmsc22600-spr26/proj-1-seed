@@ -263,7 +263,7 @@ structure PrintParseTree : sig
             | PT.EXP_Var id => prLeaf (strm, "EXP_Var", Atom.toString(#tree id))
             | PT.EXP_Number n => prLeaf (strm, "EXP_Number", IntInf.toString n)
             | PT.EXP_String s =>
-                prLeaf (strm, "EXP_String", String.concat["\"", String.toCString s, "\""])
+                prLeaf (strm, "EXP_String", String.concat["\"", String.toString s, "\""])
             | PT.EXP_Bool b => prLeaf (strm, "EXP_Bool", Bool.toString b)
           (* end case *))
 

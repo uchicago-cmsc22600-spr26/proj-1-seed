@@ -75,6 +75,14 @@ structure Main : sig
           List.app (fn s => err (concat ["  raised at ", s, "\n"])) (SMLofNJ.exnHistory exn);
           OS.Process.failure)
 
+    fun finish errStrm = if Error.anyErrors errStrm
+          then (Error.report (TextIO.stdErr, errStrm); OS.Process.failure)
+          else (
+            if Error.anyWarnings errStrm
+              then Error.report (TextIO.stdErr, errStrm)
+              else ();
+            OS.Process.success)
+
     fun main (cmd, ["--test-scanner", filename]) = let
         (* scan the input and print the tokens to <file>.toks *)
           val errStrm = Error.mkErrStream filename
@@ -82,25 +90,17 @@ structure Main : sig
           val outFile = OS.Path.joinBaseExt{base = base, ext = SOME "toks"}
           val inS = TextIO.openIn filename
           val outS = TextIO.openOut outFile
+          fun cleanup () = (TextIO.closeIn inS; TextIO.closeOut outS)
           in
-            Parser.lexer (inS, errStrm, outS);
-            TextIO.closeIn inS; TextIO.closeOut outS;
-            checkForErrors errStrm;
-            OS.Process.success
+            (Parser.lexer (inS, errStrm, outS); cleanup(); finish errStrm)
+              handle ex => (cleanup(); ignore (finish errStrm); handleExn ex)
           end
       | main (cmd, [filename]) = let
         (* parse the input and print the parse tree to <file>.pt *)
           val errStrm = Error.mkErrStream filename
-          fun finish () = if Error.anyErrors errStrm
-                then (Error.report (TextIO.stdErr, errStrm); OS.Process.failure)
-                else (
-                  if Error.anyWarnings errStrm
-                    then Error.report (TextIO.stdErr, errStrm)
-                    else ();
-                  OS.Process.success)
           in
-            (doFile (errStrm, filename); finish())
-              handle ex => (ignore (finish()); handleExn ex)
+            (doFile (errStrm, filename); finish errStrm)
+              handle ex => (ignore (finish errStrm); handleExn ex)
           end
       | main (cmd, _) = (
           TextIO.output(TextIO.stdErr, concat["usage: ", cmd, " [--test-scanner] <file>\n"]);
