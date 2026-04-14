@@ -7,8 +7,8 @@ class point (x : int, y : int) {
   method x () -> int { return self.x; }
   method y () -> int { return self.y; }
   method move (dx : int, dy : int) -> void {
-    self.x := self.x + dx;
-    self.y := self.y + dy;
+    self.x = self.x + dx;
+    self.y = self.y + dy;
   }
   method add (pt : point) -> point {
     self.move (pt.x, pt.y);
@@ -30,8 +30,8 @@ class fastPoint (x : int, y : int)
   extends point (x, y)
 {
   override method move (dx : int, dy : int) -> void {
-    self.x := self.x + 2 * dx;
-    self.y := self.y + 2 * dy;
+    self.x = self.x + 2 * dx;
+    self.y = self.y + 2 * dy;
   }
 }
 
