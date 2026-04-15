@@ -216,6 +216,7 @@ PROGRAM
                       EXP_Andalso
                         EXP_Bool(true)
                         EXP_Bool(true)
+                      EXP_Bool(true)
                   ]
               STM_Call
                 EXP_New
